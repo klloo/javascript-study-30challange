@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,7 +56,36 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-// 커밋테스트
+
+  playSound = e => {
+    // audio의 data-key 속성 값이 입력 받은 키의 코드인 엘리먼트 할당
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    // class가 key인(.key) 엘리먼트의 data-key 속성 값이 입력받은 키의 코드인 엘리먼트 할당.
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return;
+    audio.currentTime = 0; // 다시 처음부터 소리를 재생하기 위함
+    audio.play();
+    // css적용 위해서 playing 클래스 추가
+    key.classList.add('playing');
+  }
+
+  // 변화가 끝나면 수행되는 함수
+  removeTransition = e => {
+    // 트랜지션의 속성 이름이 transform이 아니면 리턴. 즉 transform속성의 transition이 끝났을 떄 아래 코드 실행
+    if(e.propertyName !== 'transform') return;
+    // 키가 눌렸을 때 적용된 css를 해제하기위해 playing 클래스 제거
+    e.target.classList.remove('playing');
+  };
+
+  // class가 key인 태그들 할당
+  const keys = document.querySelectorAll('.key');
+  // key들에 transitioned 이벤트 핸들러로 removeTrainsition 함수 추가
+  // transitionend'이벤트는 변화(css transition)가 끝났을 때 실행되는 이벤트이다.
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  // keydown이벤트가 발생하면 playSound 함수 실행
+  window.addEventListener('keydown', playSound);
+
 </script>
 
 
