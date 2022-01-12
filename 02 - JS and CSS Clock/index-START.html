@@ -62,12 +62,41 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform:rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
- // 커밋테스트 
+    const secondHand = document.querySelector('.second-hand');
+    const minHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    const getDegrees = (time, unit) => ((time/unit)*360) + 90;
+    const getRotateDegrees = (degrees) => `rotate(${degrees}deg)`;
+
+    const setTime = () => {
+      const now = new Date();
+
+      // 각도 구해서 스타일에 넣어주기
+      const second = now.getSeconds();
+      const secondsDegrees = getDegrees(second,60);
+      secondHand.style.transform = getRotateDegrees(secondsDegrees);
+
+      const min = now.getMinutes();
+      const minutesDegrees = getDegrees(min,60);
+      minHand.style.transform = getRotateDegrees(minutesDegrees);
+
+      const hour = now.getHours();
+      const hourDegrees = getDegrees(hour,12);
+      hourHand.style.transform = getRotateDegrees(hourDegrees);
+    }
+
+    setInterval(setTime,1000);
+    setTime();
 
   </script>
 </body>
