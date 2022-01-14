@@ -62,11 +62,12 @@
 
   <script>
     function updateHandler() {
+      // data-어쩌구로 커스텀 프로퍼티 설정가능. dataset.어쩌구로 가져옴
       const suffix = this.dataset.sizing || '';
       document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix);
     }
 
-    // control 클래스 하위의 input 다가져옴
+    // control 클래스 하위의 input 다 가져옴
     const inputs = document.querySelectorAll('.controls input');
     inputs.forEach((input)=> {
       // 커서 움직이는 중에도 적용 위해서 마우스무브 이벤트 추가. change는 변경된 이후에만 적용
