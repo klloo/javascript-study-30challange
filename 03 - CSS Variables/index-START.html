@@ -41,7 +41,7 @@
     h1 {
       color: var(--base);
     }
-    
+
     body {
       text-align: center;
       background: #193549;
@@ -68,6 +68,7 @@
 
     const inputs = document.querySelectorAll('.controls input');
     inputs.forEach((input)=> {
+      // 커서 움직이는 중에도 적용 위해서 마우스무브 이벤트 추가. change는 변경된 이후에만 적용
       input.addEventListener('change',updateHandler);
       input.addEventListener('mousemove',updateHandler);
     })
