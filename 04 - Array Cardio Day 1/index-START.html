@@ -102,6 +102,7 @@
     // Sum up the instances of each of these
     // data 배열에 뭐가 각각 몇 개 있는지
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    // 초기값을 객체로 설정 
     const dataSum = data.reduce((sum, item)=> {
       if(!sum[item]) 
         sum[item] = 1;
