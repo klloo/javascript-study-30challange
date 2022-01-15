@@ -37,29 +37,79 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    // 1500년대에 태어난 사람 목록 
+    const people1500 = inventors.filter((inventor)=>(
+      inventor.year >= 1500 && inventor.year < 1600
+    ));
+    console.table(people1500);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const firstName = inventors.map((inventor)=>inventor.first);
+    const lastName = inventors.map((inventor)=>inventor.last);
+    const fullName = inventors.map((inventor)=>`${inventor.first} ${inventor.last}`)
+    console.log(fullName);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // 나이 많은 순으로 정렬해라 
+    // 양수를 리턴하면 a가 뒤로 감. 즉 큰 숫자가 뒤로감. 여기서 숫자는 년도니까 클수록 젊음 젊은 사람이 뒤로감.
+    // 음수를 리턴하면 b가 뒤로감. 0이면 그대로
+    // 여기서는 오름차순으로 정렬해야하기 때문에 큰 숫자가 뒤로가야한다.
+    // 따라서 a가 크면 양수를 리턴해서 뒤로 가도록 해줘야 한다.
+    const sortList = inventors.sort((a,b) => a.year > b.year ? 1 : -1);
+    // const sortList = inventors.sort((a,b) => a.year - b.year); 도 가능 
+    console.table(sortList);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    // 사람들 산 년도 다 합쳐보세요
+    const totalYears = inventors.reduce((total,inventor)=> (
+      total + (inventor.passed - inventor.year)
+    ), 0);
+    console.log(totalYears);
 
     // 5. Sort the inventors by years lived
+    // 산 나이 순으로 정렬 (내림차순)
+    const sortList2 = inventors.sort((a,b) => {
+      const aAge = a.passed - a.year;
+      const bAge = b.passed - b.year;
+      return aAge > bAge ? -1 : 1;
+    })
+    console.table(sortList2);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // 이 사이트에 이름에 de가 포함된 파리의 거리목록 만들기
+    // 'mw-category' 클래스를 가진 div요소 하위에 a 태그에 거리 이름이 있다.
+    // const category = document.querySelector('.mw-category');
+    // const links = category.querySelectorAll('a');
+    // const linkArray = Array.from(links);
+    // const streetsDe = linkArray.map((link)=>link.text).filter((street)=>street.inlcudes('de'));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    // people배열 사람 이름 알파벳 순으로 정렬
+    const sortList3 = people.sort((a,b) => {
+      const [aLast, aFirst] = a.split(' ');
+      const [bLast, bFirst] = b.split(' ');
+      return aLast > bLast ? 1 : -1;
+    });
+    console.log(sortList3);
+    
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
+    // data 배열에 뭐가 각각 몇 개 있는지
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    const dataSum = data.reduce((sum, item)=> {
+      if(!sum[item]) 
+        sum[item] = 1;
+      else 
+        sum[item]++;
+      return sum;
+    },{});
+    console.table(dataSum);
   </script>
 </body>
 </html>
