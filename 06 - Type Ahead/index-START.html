@@ -15,8 +15,57 @@
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  // data 받아오기
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const cities = [];
+  fetch(endpoint)
+    .then(res => res.json())
+    .then(data => cities.push(...data));
 
+  const suggestions = document.querySelector('.suggestions');
+
+  // x는 숫자
+  // x에 천단위 콤마 찍어주는 함수
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  // 화면에 검색된 목록 보여주기
+  function paintCities() {
+    const searchText = this.value;
+    const searchResult = getSearchCities(searchText, cities);
+    // 각 도시 리스트를 가지고 li태그 만들기
+    // .join('') - 배열 요소를 합쳐서 문자열로 만든다. 파라미터는 separator
+    const reg = new RegExp(searchText,'gi');
+
+    const liHtml = searchResult.map(place => {
+      const cityName = place.city.replace(reg,`<span class="hl">${searchText}</span>`)
+      const stateName = place.state.replace(reg,`<span class="hl">${searchText}</span>`)
+      return `
+        <li>
+          <span class="name">${cityName}, ${stateName}</span>
+          <span class="population">${numberWithCommas(place.population)}</span>
+        </li> `;
+    }).join('');
+    // innerHTML은 xss의 위험이 있으므로 지양하는 것이 좋다.
+    suggestions.innerHTML = liHtml;
+  }
+
+  function getSearchCities(text, cities) {
+    // 정규표현식 객체 생성
+    // pattern : text , option : g - 모든 문자열 확인, i - 대소문자 구분 X
+    const reg = new RegExp(text,'gi');
+    // 검색 키워드와 매치되는 주나 도시 이름가진 원소만 리턴
+    // .match() -> .match()는 정규표현식에 맞는 문자열을 찾아서 배열 객체로 반환. 없으면 null 반환
+    return cities.filter(palce => {
+      return palce.city.match(reg) || palce.state.match(reg);
+    });
+  }
+
+  const searchInput = document.querySelector('.search');
+
+  searchInput.addEventListener('change',paintCities);
+  searchInput.addEventListener('keyup',paintCities);
 </script>
 </body>
 </html>
