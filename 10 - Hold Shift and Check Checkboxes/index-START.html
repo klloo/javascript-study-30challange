@@ -99,12 +99,12 @@
     const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"');
     
     // 마지막으로 체크한 요소
-    let lastChecked;
+    let lastChecked = null;
   
     function checkHandler(e) {
       let inBetween = false;
       // 시프트키를 누르고 현재 체크를 선택했을 때 lastChecked와 this사이의 요소를 모두 선택해 줌
-      if(e.shiftKey && this.checked) {
+      if(e.shiftKey && this.checked && lastChecked !== null) {
         checkboxes.forEach((checkbox) => {
           if(this === checkbox || lastChecked === checkbox) {
             inBetween = !inBetween;
@@ -114,7 +114,8 @@
           }
         })
       }
-      lastChecked = this;
+      if(this.checked) lastChecked = this;
+      else lastChecked = null;
     }
   
     checkboxes.forEach((checkbox) => {
