@@ -95,7 +95,32 @@
     </div>
   </div>
 
-<script>
-</script>
+  <script>
+    const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"');
+    
+    // 마지막으로 체크한 요소
+    let lastChecked;
+  
+    function checkHandler(e) {
+      let inBetween = false;
+      // 시프트키를 누르고 현재 체크를 선택했을 때 lastChecked와 this사이의 요소를 모두 선택해 줌
+      if(e.shiftKey && this.checked) {
+        checkboxes.forEach((checkbox) => {
+          if(this === checkbox || lastChecked === checkbox) {
+            inBetween = !inBetween;
+          }
+          if(inBetween) {
+            checkbox.checked = true;
+          }
+        })
+      }
+      lastChecked = this;
+    }
+  
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('click',checkHandler);
+    });
+  
+  </script>
 </body>
 </html>
