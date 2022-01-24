@@ -7,6 +7,20 @@
 </head>
 <body>
 <script>
+  const target = 'hello';
+  const pressedKeys = [];
+  function pressKeyHandler(e) {
+    pressedKeys.push(e.key);
+    // 반환값 : 삭제된 요소
+    pressedKeys.splice(-target.length-1, pressedKeys.length-target.length);
+    const pressedWord = pressedKeys.join('');
+    if(pressedWord.includes(target)) { 
+      console.log('딩 딩!');
+      cornify_add();
+    }
+    console.log(pressedWord);
+  }
+  window.addEventListener('keyup',pressKeyHandler);
 </script>
 </body>
 </html>
