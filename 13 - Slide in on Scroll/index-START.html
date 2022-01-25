@@ -58,6 +58,26 @@
       };
     }
 
+    const images = document.querySelectorAll('img');
+    function checkSlide() {
+      // 스크롤 내려갈 때 마다 이미지들 위치 확인하고 보여줘야되면 클래스 추가, 아니면 제거
+      // 이미지의 절반이 내려왔을때 보여주고 다 올라가면 안보여줌
+      images.forEach((image) => {
+        // 이미지가 보여질 위치. 이미지의 절반이 보여지면 보여줌
+        const slideInAt = (window.scrollY + window.innerHeight) - (image.height / 2);
+        // 이미지 맨 아래 위치. 이거 이상으로 스크롤 하면 이미지 안보여줌
+        const imageBottom = image.offsetTop + image.height;
+        const isShow = slideInAt > image.offsetTop;
+        const isOnWindow = window.scrollY < imageBottom;
+        if(isShow && isOnWindow) {
+          image.classList.add('active');
+        } else {
+          image.classList.remove('active');
+        }
+      });
+    }
+    window.addEventListener('scroll',debounce(checkSlide));
+
   </script>
 
   <style>
