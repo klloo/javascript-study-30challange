@@ -182,6 +182,24 @@
     </li>
   </ul>
 <script>
+  // li태그의 data-time 속성 시간 다 더해서 몇 시간 몇 분 몇 초인지 구하기
+  const videos = [...document.querySelectorAll('[data-time]')];
+  const seconds =
+    videos.map((item) => item.dataset.time)
+    .map((item) => {
+      const [min, seconds] = item.split(':').map(parseFloat);
+      return min*60 + seconds;
+    })
+    .reduce((total,sec)=>total+sec);
+  
+  let leftSeconds = seconds;
+  const hours = Math.floor(leftSeconds / 3600);
+  leftSeconds = leftSeconds % 3600;
+
+  const mins = Math.floor(leftSeconds / 60);
+  leftSeconds = leftSeconds % 60;
+
+  console.log(hours, mins, leftSeconds);
 </script>
 </body>
 </html>
