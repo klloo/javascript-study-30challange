@@ -188,9 +188,9 @@
     videos.map((item) => item.dataset.time)
     .map((item) => {
       const [min, seconds] = item.split(':').map(parseFloat);
-      return min*60 + seconds;
+      return min * 60 + seconds;
     })
-    .reduce((total,sec)=>total+sec);
+    .reduce((total,sec) => total+sec);
   
   let leftSeconds = seconds;
   const hours = Math.floor(leftSeconds / 3600);
