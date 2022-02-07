@@ -54,7 +54,20 @@
   </div>
 
 <script>
+  const nav = document.querySelector('#main');
+  
+  function fixNav() {
+    if(nav.offsetTop < window.scrollY) {
+      document.body.style.paddingTop = `${nav.offsetHeight}px`;
+      document.body.classList.add('fix-nav');
+    }
+    else {
+      document.body.classList.remove('fix-nav');
+      document.body.style.paddingTop = 0;
+    }
+  }
 
+  window.addEventListener('scroll',fixNav);
 </script>
 
 </body>
