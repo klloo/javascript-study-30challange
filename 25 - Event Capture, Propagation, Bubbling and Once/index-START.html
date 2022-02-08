@@ -42,7 +42,23 @@
 
 <button></button>
 <script>
+const divs = document.querySelectorAll('div');
+const button = document.querySelector('button');
 
+function printName(e) {
+  e.stopPropagation();
+  console.dir(this.className);
+}
+divs.forEach(div => div.addEventListener('click',printName,{
+  capture: false
+}));
+
+// once : 이벤트 리스너가 한 번 실행된 후 제거됨
+button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once: true
+  });
 </script>
 </body>
 </html>
