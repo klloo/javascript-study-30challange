@@ -220,6 +220,37 @@
 </style>
 
 <script>
+    const menus = document.querySelectorAll('.cool > li');
+  const nav = document.querySelector('nav');
+  const dropdownBackground = document.querySelector('.dropdownBackground');
+
+  function enterHandler() {
+    this.classList.add('trigger-enter');
+    setTimeout(()=> this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'));
+    dropdownBackground.classList.add('open');
+    const dropdown = this.querySelector('.dropdown');
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+    const coords = {
+      height : dropdownCoords.height,
+      width : dropdownCoords.width,
+      x : dropdownCoords.x - navCoords.x,
+      y : dropdownCoords.y - navCoords.y,
+    }
+    dropdownBackground.style.setProperty('height',`${coords.height}px`);
+    dropdownBackground.style.setProperty('width',`${coords.width}px`);
+    dropdownBackground.style.setProperty('transform',`translate(${coords.x}px,${coords.y}px)`);
+  }
+
+  function leaveHandler() {
+    this.classList.remove('trigger-enter','trigger-enter-active');
+    dropdownBackground.classList.remove('open');
+  }
+
+  menus.forEach(menu => {
+    menu.addEventListener('mouseenter',enterHandler);
+    menu.addEventListener('mouseleave',leaveHandler);
+  });
 </script>
 
 </body>
